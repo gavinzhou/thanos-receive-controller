@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: kube-system
+  name: thanos-receive-controller
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  namespace: kube-system
+  name: thanos-receive-controller-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: thanos-receive-controller-role
+subjects:
+- kind: ServiceAccount
+  name: thanos-receive-controller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  namespace: kube-system
+  name: thanos-receive-controller-role
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  verbs:
+  - list
+- apiGroups:
+  - "apps"
+  resources:
+  - statefulsets
+  verbs:
+  - list

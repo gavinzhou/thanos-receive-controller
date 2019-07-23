@@ -33,6 +33,7 @@ spec:
       labels:
         app.kubernetes.io/name: thanos-receive-controller
     spec:
+      serviceAccountName: thanos-receive-controller
       containers:
       - args:
         - --configmap-name=thanos-receive
@@ -78,7 +79,7 @@ spec:
         - --remote-write.address=0.0.0.0:19291
         - --grpc-address=0.0.0.0:10901
         - --receive.hashrings-file=/var/lib/thanos-receive/hashrings.json
-        image: improbable/thanos
+        image: improbable/thanos:v0.6.0
         name: thanos-receive
         ports:
         - containerPort: 10901
